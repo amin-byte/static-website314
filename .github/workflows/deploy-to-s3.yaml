@@ -20,3 +20,12 @@ jobs:
 
     - name: Deploy static site to S3 bucket
       run: aws s3 sync . s3://amina27.halykmart.live --delete
+
+    - name: Cloudfront Invalidation
+      uses: chetan/invalidate-cloudfront-action@master
+      with:
+        DISTRIBUTION: ${{ secrets.AWS_DISTRIBUTION_PRODUCTION }}
+        PATHS: '/*'
+        AWS_REGION: us-east-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
